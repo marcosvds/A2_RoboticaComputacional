@@ -44,6 +44,6 @@ Baseado nos círculos encontrados pela transformada de Hough, desenhe um círcul
 
 <h3>Parte 6</h3>
 <p>
-Usando um detector de features BRISK, identifique o escrito Insper na folha. Veja os exemplos no notebook e em em código .
+Usando um detector de features BRISK, identifique o escrito Insper na folha. Veja os exemplos no notebook e em em código.
 </p>
 

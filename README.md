@@ -39,16 +39,7 @@ Trace uma linha entre os centros do círculo magenta e do círculo ciano. Imprim
 
 <h3>Parte 5</h3>
 <p>
-Trace uma linha entre os centros do círculo magenta e do círculo ciano. Imprima na tela o ângulo entre esta linha e a horizontal.
-</p>
-
-<h3>Parte 6</h3>
-<p>
-Baseado nos círculos encontrados pela transformada de Hough, desenhe um círculo sobre o círculo ciano e outro sobre o círculo magenta.
-
-Dica: Use a função cv2.circle e veja o exemplo draw_circles_video.py.
-
-Desafio bônus: ser capaz de eliminar circulos espúrios (aqueles que não são os da folha).
+Baseado nos círculos encontrados pela transformada de Hough, desenhe um círculo sobre o círculo ciano e outro sobre o círculo magenta. Desafio bônus: ser capaz de eliminar circulos espúrios (aqueles que não são os da folha).
 </p>
 
 <h3>Parte 6</h3>

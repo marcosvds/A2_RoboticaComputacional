@@ -65,3 +65,25 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 3840)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 2160)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
+
+while(True):
+    ret, frame = cap.read()
+
+    img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
+    img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
+    mask_b = cv2.inRange(img_hsv, hsv1_b, hsv2_b)
+    mask_p = cv2.inRange(img_hsv, hsv1_p, hsv2_p) 
+    maskf = mask_b + mask_p
+    not_mask = cv2.bitwise_not(maskf)
+    res = cv2.bitwise_and(img_gray,img_gray, mask = not_mask)
+    res2 = cv2.bitwise_and(frame,frame, mask= maskf)
+    img_mask = cv2.cvtColor(res, cv2.COLOR_GRAY2RGB)
+    final = cv2.bitwise_or(res2, img_mask)
+
+    cv2.imshow('frame', final)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()

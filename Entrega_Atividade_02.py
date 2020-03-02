@@ -48,7 +48,6 @@ def find_homography_draw_box(kp1, kp2, img_cena):
     src_pts = np.float32([ kp1[m.queryIdx].pt for m in good ]).reshape(-1,1,2)
     dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ]).reshape(-1,1,2)
     M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC,5.0)
-    matchesMask = mask.ravel().tolist() 
     h,w = img_original.shape
     pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
     dst = cv2.perspectiveTransform(pts,M)
@@ -107,6 +106,31 @@ while(True):
     else:
         cv2.putText(final,'Distance = Searching...',(10,100), font, 1,(0,255,0),2,cv2.LINE_AA)
         cv2.putText(final, "Degrees = Searching...", (10,150), font, 1,(0,255,0),2,cv2.LINE_AA)
+  
+    MIN_MATCH_COUNT = 10
+    original_bgr = cv2.imread('folha_atividade_insper.png')
+    img_original = cv2.cvtColor(original_bgr, cv2.COLOR_BGR2GRAY)
+    img_cena = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    brisk = cv2.BRISK_create()
+    kp1, des1 = brisk.detectAndCompute(img_original ,None)
+    kp2, des2 = brisk.detectAndCompute(img_cena,None)
+    
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING)
+    matches = bf.knnMatch(des1,des2,k=2)
+    
+    good = []
+    for m,n in matches:
+        if m.distance < 0.7*n.distance:
+            good.append(m)
+    
+    if len(good)>MIN_MATCH_COUNT:
+        cv2.putText(final,'Matches found',(10,200), font, 1,(0,255,0),2,cv2.LINE_AA)    
+        find_homography_draw_box(kp1, kp2, final)
+    else:
+        val_1 = str(len(good))
+        val_2 = str(MIN_MATCH_COUNT)
+        cv2.putText(final,'Not enough matches are found ' + val_1 + '/' + val_2,(10,200), font, 1,(0,255,0),2,cv2.LINE_AA)      
 
     cv2.imshow('frame', final)
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -114,3 +138,14 @@ while(True):
 
 cap.release()
 cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+

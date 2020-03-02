@@ -54,3 +54,14 @@ def find_homography_draw_box(kp1, kp2, img_cena):
     dst = cv2.perspectiveTransform(pts,M)
     img2b = cv2.polylines(out,[np.int32(dst)],True,(0,255,0),5, cv2.LINE_AA)
     return img2b   
+
+hsv1_b = np.array([97,50,50], dtype=np.uint8)
+hsv2_b = np.array([145, 255, 255], dtype=np.uint8)
+hsv1_p = np.array([145,  50,  50], dtype=np.uint8)
+hsv2_p = np.array([179, 255, 255], dtype=np.uint8)
+
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 3840)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 2160)
+
+font = cv2.FONT_HERSHEY_SIMPLEX

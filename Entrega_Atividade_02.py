@@ -80,6 +80,33 @@ while(True):
     res2 = cv2.bitwise_and(frame,frame, mask= maskf)
     img_mask = cv2.cvtColor(res, cv2.COLOR_GRAY2RGB)
     final = cv2.bitwise_or(res2, img_mask)
+    
+    cv2.putText(final,'Press Q to quit',(10,50), font, 1,(0,255,0),2,cv2.LINE_AA)
+    
+    blur = cv2.GaussianBlur(img_gray,(5,5),0)
+    bordas = auto_canny(blur)
+    
+    circles = []
+    circles = None
+    circles=cv2.HoughCircles(bordas,cv2.HOUGH_GRADIENT,2,40,param1=70,param2=100,minRadius=5,maxRadius=70)
+
+    if circles is not None:   
+        circles = np.uint16(np.around(circles))
+        lista_raio = []
+        lista_posix = []
+        lista_posiy = []
+        for i in circles[0,:]:
+            if maskf[i[1]][i[0]] == 255:
+                lista_raio.append(int(i[2]))
+                lista_posix.append(int(i[0]))
+                lista_posiy.append(int(i[1]))
+                cv2.circle(final,(i[0],i[1]),i[2],(0,255,0),2)
+                cv2.circle(final,(i[0],i[1]),2,(0,255,0),3)
+        if len(lista_raio) >= 2:
+            calc_dist(final,lista_posix,lista_posiy)
+    else:
+        cv2.putText(final,'Distance = Searching...',(10,100), font, 1,(0,255,0),2,cv2.LINE_AA)
+        cv2.putText(final, "Degrees = Searching...", (10,150), font, 1,(0,255,0),2,cv2.LINE_AA)
 
     cv2.imshow('frame', final)
     if cv2.waitKey(1) & 0xFF == ord('q'):

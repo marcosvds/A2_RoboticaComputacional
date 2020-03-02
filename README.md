@@ -15,6 +15,11 @@
   <li><a href=https://www.linkedin.com/in/fabiodemiranda/>Me. Fabio Roberto de Miranda</a></li>
 </ul>
 
+<h3>Testando Atividade:</h3> 
+<ul>
+  <li><a href=https://youtu.be/Z3c4jAR3u4w>Vídeo Teste</a></li>
+</ul>
+
 <h2>Informações da Atividade</h2>
 
 <h3>Parte 1</h3>

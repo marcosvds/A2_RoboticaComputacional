@@ -16,7 +16,7 @@ if (sys.version_info > (3, 0)):
 else:
     # Modo Python 2
     reload(aux)
-
+#Parte_3-----------------------------------
 def calc_dist(frame,l_x,l_y):
             cv2.line(frame,(l_x[0],l_y[0]),(l_x[1],l_y[1]),(0,255,0),3)
             dist_real = 13.9
@@ -29,13 +29,15 @@ def calc_dist(frame,l_x,l_y):
             if math.isnan(dist_calc):  
                 cv2.putText(final,'Distance = Searching...',(10,100), font, 1,(0,255,0),2,cv2.LINE_AA)
                 cv2.putText(final, "Degrees = Searching...", (10,150), font, 1,(0,255,0),2,cv2.LINE_AA)
+#-----------------------------------------
+#Parte_4----------------------------------                
             else:
                 dist = str(round(dist_calc,3))
                 cv2.putText(final,'Distance = '+ dist + "cm",(10,100), font, 1,(0,255,0),2,cv2.LINE_AA)
                 Ang= math.degrees(math.atan2((l_y[0] - l_y[1]), (l_x[0] - l_x[1])))
                 Ang_final = str(round(abs(Ang),3))
                 cv2.putText(final, "Degrees = " + Ang_final, (10,150), font, 1,(0,255,0),2,cv2.LINE_AA)
-
+#------------------------------------------
 def auto_canny(image, sigma=0.33):
     v = np.median(image)
     lower = int(max(0, (1.0 - sigma) * v))
@@ -67,7 +69,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 
 while(True):
     ret, frame = cap.read()
-
+#Parte_2--------------------------------------------
     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
     img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
@@ -79,7 +81,8 @@ while(True):
     res2 = cv2.bitwise_and(frame,frame, mask= maskf)
     img_mask = cv2.cvtColor(res, cv2.COLOR_GRAY2RGB)
     final = cv2.bitwise_or(res2, img_mask)
-    
+#---------------------------------------------------
+# Parte_5-------------------------------------------
     cv2.putText(final,'Press Q to quit',(10,50), font, 1,(0,255,0),2,cv2.LINE_AA)
     
     blur = cv2.GaussianBlur(img_gray,(5,5),0)
@@ -106,7 +109,8 @@ while(True):
     else:
         cv2.putText(final,'Distance = Searching...',(10,100), font, 1,(0,255,0),2,cv2.LINE_AA)
         cv2.putText(final, "Degrees = Searching...", (10,150), font, 1,(0,255,0),2,cv2.LINE_AA)
-  
+#----------------------------------------------------
+#Parte_6---------------------------------------------
     MIN_MATCH_COUNT = 10
     original_bgr = cv2.imread('folha_atividade_insper.png')
     img_original = cv2.cvtColor(original_bgr, cv2.COLOR_BGR2GRAY)
@@ -131,7 +135,7 @@ while(True):
         val_1 = str(len(good))
         val_2 = str(MIN_MATCH_COUNT)
         cv2.putText(final,'Not enough matches are found ' + val_1 + '/' + val_2,(10,200), font, 1,(0,255,0),2,cv2.LINE_AA)      
-
+#----------------------------------------------------
     cv2.imshow('frame', final)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
